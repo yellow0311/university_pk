@@ -6,9 +6,6 @@
 > 在线访问：<https://yellow0311.github.io/university_pk/>
 > 本仓库是**构建好的纯静态站点**（无后端），由 `scripts/build_static.py` 生成。
 
-![世界视图](docs/screenshot-world.png)
-
-![中国视图](docs/screenshot-china.png)
 
 ---
 

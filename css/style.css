@@ -1,0 +1,269 @@
+/* ==========================================
+   省份大学水平 PK - 暗色仪表盘样式
+   ========================================== */
+
+/* ---------- CSS Variables ---------- */
+:root {
+    --bg-primary: #0f1923;
+    --bg-secondary: #1a2530;
+    --bg-card: #1e2d3d;
+    --bg-elevated: #243447;
+    --text-primary: #e8edf2;
+    --text-secondary: #8899a6;
+    --text-muted: #5c6e7a;
+    --border: #2a3a4a;
+    --accent: #3b82f6;
+    --accent-glow: rgba(59, 130, 246, 0.25);
+    --grade-s: #22c55e;
+    --grade-a: #3b82f6;
+    --grade-b: #eab308;
+    --grade-c: #f97316;
+    --grade-d: #ef4444;
+    --sidebar-width: 380px;
+    --header-height: 64px;
+    --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+    background: var(--bg-primary); color: var(--text-primary);
+    height: 100vh; overflow: hidden; display: flex; flex-direction: column;
+}
+
+/* ---------- Header ---------- */
+.header {
+    height: var(--header-height); background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border); display: flex; align-items: center;
+    padding: 0 24px; gap: 24px; z-index: 100; flex-shrink: 0;
+}
+.header-title {
+    font-size: 20px; font-weight: 700; white-space: nowrap;
+    background: linear-gradient(135deg, var(--accent), #8b5cf6);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+/* ---------- Scope Tabs ---------- */
+.scope-tabs { display:flex; gap:4px; background:var(--bg-primary); border-radius:10px; padding:4px; margin-right:4px; }
+.scope-tab {
+    border:none; background:transparent; color:var(--text-secondary); font-size:13px; font-weight:500;
+    padding:8px 16px; border-radius:8px; cursor:pointer; transition:all var(--transition); white-space:nowrap;
+}
+.scope-tab:hover { color:var(--text-primary); background:var(--bg-card); }
+.scope-tab.active { background:var(--accent); color:#fff; box-shadow:0 2px 8px var(--accent-glow); }
+
+/* ---------- Dimension Tabs ---------- */
+.dimension-tabs { display:flex; gap:4px; background:var(--bg-primary); border-radius:10px; padding:4px; }
+.tab {
+    border:none; background:transparent; color:var(--text-secondary); font-size:13px; font-weight:500;
+    padding:8px 18px; border-radius:8px; cursor:pointer; transition:all var(--transition); white-space:nowrap;
+}
+.tab:hover { color:var(--text-primary); background:var(--bg-card); }
+.tab.active { background:var(--accent); color:#fff; box-shadow:0 2px 8px var(--accent-glow); }
+
+/* ---------- Filters ---------- */
+.filters { margin-left:auto; display:flex; gap:8px; }
+.filter-select {
+    background:var(--bg-primary); color:var(--text-primary); border:1px solid var(--border);
+    border-radius:8px; padding:8px 14px; font-size:13px; cursor:pointer; outline:none;
+    transition:border-color var(--transition);
+}
+.filter-select:focus { border-color:var(--accent); }
+.filter-select option { background:var(--bg-elevated); color:var(--text-primary); }
+
+/* ---------- Main Container ---------- */
+.main-container { flex:1; display:flex; position:relative; overflow:hidden; }
+
+/* ---------- Map Section ---------- */
+.map-section { flex:1; position:relative; display:flex; flex-direction:column; }
+.map-wrapper { flex:1; cursor:grab; }
+.map-wrapper:active { cursor:grabbing; }
+
+/* ---------- Legend ---------- */
+.legend-bar {
+    position:absolute; bottom:24px; left:50%; transform:translateX(-50%);
+    display:flex; align-items:center; gap:6px; background:var(--bg-secondary);
+    border:1px solid var(--border); border-radius:12px; padding:10px 20px; z-index:10;
+}
+.legend-item { display:flex; align-items:center; gap:6px; font-size:12px; color:var(--text-secondary); }
+.legend-color { width:28px; height:14px; border-radius:3px; }
+
+/* ---------- Sidebar ---------- */
+.sidebar {
+    width: var(--sidebar-width); background: var(--bg-secondary);
+    border-left: 1px solid var(--border); display: flex; flex-direction: column;
+    overflow: hidden; transition: width var(--transition); flex-shrink: 0;
+}
+.sidebar.collapsed { width: 0; min-width: 0; border-left: none; }
+.sidebar.collapsed .sidebar-header h2,
+.sidebar.collapsed .sidebar-content,
+.sidebar.collapsed .province-detail { display: none; }
+.sidebar.collapsed .sidebar-header { justify-content: center; padding: 12px 6px; }
+
+.sidebar-header { display:flex; align-items:center; justify-content:space-between; padding:20px 20px 12px; flex-shrink:0; }
+.sidebar-title { font-size:16px; font-weight:600; }
+.sidebar-toggle {
+    background:var(--bg-elevated); border:1px solid var(--border); color:var(--text-secondary);
+    width:32px; height:32px; border-radius:8px; cursor:pointer; font-size:12px;
+    display:flex; align-items:center; justify-content:center; transition:all var(--transition);
+}
+.sidebar-toggle:hover { color:var(--text-primary); background:var(--accent); border-color:var(--accent); }
+
+.sidebar-content {
+    flex:1; overflow-y:auto; padding:8px 20px 20px; max-height: calc(100vh - 140px);
+}
+.sidebar-content::-webkit-scrollbar { width:4px; }
+.sidebar-content::-webkit-scrollbar-thumb { background:var(--border); border-radius:2px; }
+
+/* ---------- Rank List ---------- */
+.rank-list { list-style:none; }
+.rank-item {
+    display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:10px;
+    cursor:pointer; transition:all var(--transition); border:1px solid transparent; margin-bottom:4px;
+}
+.rank-item:hover { background:var(--bg-card); border-color:var(--border); }
+.rank-item .rank-num { font-size:18px; font-weight:700; min-width:28px; text-align:center; color:var(--text-muted); }
+.rank-item:nth-child(1) .rank-num { color:#fbbf24; }
+.rank-item:nth-child(2) .rank-num { color:#9ca3af; }
+.rank-item:nth-child(3) .rank-num { color:#d97706; }
+.rank-item .rank-info { flex:1; min-width:0; }
+.rank-item .rank-province { font-size:14px; font-weight:600; }
+.rank-item .rank-region { font-size:11px; color:var(--text-muted); }
+.rank-item .rank-score { font-size:18px; font-weight:700; font-variant-numeric: tabular-nums; }
+.rank-item .rank-grade { font-size:11px; font-weight:700; padding:2px 8px; border-radius:4px; }
+
+.grade-S { background: rgba(34, 197, 94, 0.15); color: var(--grade-s); }
+.grade-A { background: rgba(59, 130, 246, 0.15); color: var(--grade-a); }
+.grade-B { background: rgba(234, 179, 8, 0.15); color: var(--grade-b); }
+.grade-C { background: rgba(249, 115, 22, 0.15); color: var(--grade-c); }
+.grade-D { background: rgba(239, 68, 68, 0.15); color: var(--grade-d); }
+
+/* ---------- Province Detail ---------- */
+.province-detail {
+    padding:0 20px 20px; flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:12px;
+}
+.province-detail::-webkit-scrollbar { width:4px; }
+.province-detail::-webkit-scrollbar-thumb { background:var(--border); border-radius:2px; }
+
+.back-btn {
+    background:transparent; border:1px solid var(--border); color:var(--text-secondary);
+    padding:8px 14px; border-radius:8px; cursor:pointer; font-size:13px; transition:all var(--transition);
+    align-self:flex-start;
+}
+.back-btn:hover { color:var(--text-primary); border-color:var(--accent); }
+
+.detail-province-name { font-size:22px; font-weight:700; }
+.detail-grade { display:inline-flex; align-items:center; gap:8px; font-size:14px; font-weight:600; }
+.radar-wrapper { width:100%; height:320px; flex-shrink:0; }
+.uni-section-title { font-size:14px; font-weight:600; color:var(--text-primary); margin-top:8px; }
+
+/* ---------- University List ---------- */
+.uni-list { display:flex; flex-direction:column; gap:4px; }
+.uni-item {
+    display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:8px;
+    background:var(--bg-card); transition:background var(--transition);
+}
+.uni-item:hover { background:var(--bg-elevated); }
+.uni-rank { font-size:12px; font-weight:700; color:var(--text-muted); min-width:18px; text-align:center; }
+.uni-item:nth-child(1) .uni-rank { color:#fbbf24; }
+.uni-item:nth-child(2) .uni-rank { color:#9ca3af; }
+.uni-item:nth-child(3) .uni-rank { color:#d97706; }
+.uni-name { flex:1; font-size:13px; font-weight:500; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.uni-type-badge { font-size:10px; font-weight:600; padding:2px 7px; border-radius:4px; white-space:nowrap; flex-shrink:0; }
+.badge-985 { background: rgba(34, 197, 94, 0.15); color: var(--grade-s); }
+.badge-211 { background: rgba(59, 130, 246, 0.15); color: var(--grade-a); }
+.badge-双一流A { background: rgba(139, 92, 246, 0.15); color: #8b5cf6; }
+.badge-双一流学科 { background: rgba(168, 85, 247, 0.15); color: #a855f7; }
+.badge-中外合办 { background: rgba(236, 72, 153, 0.15); color: #ec4899; }
+.badge-普通本科 { background: rgba(136, 153, 166, 0.12); color: var(--text-secondary); }
+.badge-顶尖名校 { background: rgba(34, 197, 94, 0.20); color: #4ade80; }
+.badge-强校 { background: rgba(59, 130, 246, 0.18); color: #60a5fa; }
+.uni-score { font-size:13px; font-weight:700; min-width:28px; text-align:right; color:var(--text-primary); }
+.uni-note { font-size:10px; color:var(--text-muted); flex-shrink:0; }
+
+.detail-scores { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.detail-score-item { background:var(--bg-card); padding:10px 12px; border-radius:8px; }
+.detail-score-item .ds-label { font-size:11px; color:var(--text-muted); }
+.detail-score-item .ds-value { font-size:18px; font-weight:700; }
+
+/* ---------- Loading / Empty ---------- */
+.loading-overlay {
+    position:absolute; inset:0; background:rgba(15, 25, 35, 0.85);
+    display:flex; align-items:center; justify-content:center; z-index:50;
+}
+.loading-spinner {
+    width:40px; height:40px; border:3px solid var(--border);
+    border-top-color:var(--accent); border-radius:50%; animation:spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---------- Breadcrumb ---------- */
+.sidebar-crumb {
+    display:flex; align-items:center; gap:6px; padding:0 20px 10px;
+    font-size:12px; color:var(--text-secondary); flex-shrink:0;
+}
+.sidebar-crumb[hidden] { display:none; }
+.crumb-link {
+    background:transparent; border:none; color:var(--accent); cursor:pointer;
+    font-size:12px; padding:2px 0; font-family:inherit;
+}
+.crumb-link:hover { text-decoration:underline; }
+.crumb-sep { color:var(--text-muted); }
+.crumb-current { color:var(--text-primary); font-weight:600; }
+.sidebar.collapsed .sidebar-crumb { display:none; }
+
+/* ---------- Error / Empty ---------- */
+.fatal-error {
+    display:flex; align-items:center; justify-content:center; height:100%;
+    flex-direction:column; gap:16px; padding:24px; text-align:center;
+}
+.fatal-error .fatal-icon { font-size:48px; }
+.fatal-error p { color:var(--text-secondary); font-size:15px; max-width:520px; line-height:1.6; }
+.fatal-error code {
+    background:var(--bg-card); padding:2px 6px; border-radius:4px;
+    font-size:13px; color:var(--text-primary);
+}
+.uni-empty { color:var(--text-muted); font-size:12px; text-align:center; padding:10px; }
+
+/* ---------- Map color legend ---------- */
+.map-legend {
+    position:absolute; left:50%; bottom:18px; transform:translateX(-50%);
+    display:flex; align-items:center; gap:8px;
+    background:rgba(26, 37, 48, 0.82); border:1px solid var(--border);
+    border-radius:10px; padding:6px 12px; z-index:5; pointer-events:none;
+}
+.legend-label { font-size:11px; color:var(--text-secondary); white-space:nowrap; }
+.legend-gradient {
+    width:200px; height:10px; border-radius:5px;
+    background:linear-gradient(90deg, #243447 0%, #2c5a7a 14%, #3a86a8 29%,
+        #55a88f 43%, #8cbf5a 57%, #d4c34a 71%, #f0a03c 86%, #f26b3a 100%);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1500px) {
+    .header { gap: 12px; padding: 0 16px; }
+    .header-title { font-size: 17px; }
+    .scope-tab { padding: 7px 12px; font-size: 12px; }
+    .tab { padding: 7px 11px; font-size: 12px; }
+    .dimension-tabs {
+        flex-shrink: 1; min-width: 0; overflow-x: auto; scrollbar-width: none;
+    }
+    .dimension-tabs::-webkit-scrollbar { display: none; }
+    .filters { flex-shrink: 0; }
+    .filter-select { padding: 7px 10px; font-size: 12px; }
+}
+@media (max-width: 1180px) {
+    .header-title { font-size: 15px; }
+    .scope-tab, .tab { padding: 6px 9px; font-size: 11.5px; }
+    .filter-select { padding: 6px 8px; font-size: 11.5px; }
+}
+@media (max-width: 900px) {
+    .sidebar { width: 320px; }
+    .dimension-tabs { overflow-x:auto; max-width:60vw; }
+    .tab { padding:6px 10px; font-size:11px; }
+}
+@media (max-width: 640px) {
+    .sidebar { position:absolute; right:0; top:0; bottom:0; z-index:200; box-shadow:-4px 0 20px rgba(0,0,0,0.3); }
+    .sidebar.collapsed { width:0; }
+}

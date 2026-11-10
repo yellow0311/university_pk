@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-mode="static">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>全球大学水平 PK · 可视化</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="header">
+  <h1 class="header-title">🎓 全球大学水平 PK</h1>
+  <div class="scope-tabs" id="scopeTabs">
+    <button class="scope-tab active" data-scope="world">🌍 世界</button>
+    <button class="scope-tab" data-scope="china">🇨🇳 中国</button>
+  </div>
+  <nav class="dimension-tabs" id="dimensionTabs">
+    <button class="tab active" data-dim="composite">综合评分</button>
+    <button class="tab" data-dim="top_universities">顶尖大学</button>
+    <button class="tab" data-dim="international">国际影响力</button>
+    <button class="tab" data-dim="discipline_strength">学科实力</button>
+    <button class="tab" data-dim="faculty">师资力量</button>
+    <button class="tab" data-dim="scale">办学规模</button>
+    <button class="tab" data-dim="research">科研产出</button>
+  </nav>
+  <div class="filters">
+    <select id="regionFilter" class="filter-select" title="按地区筛选">
+      <option value="">📍 全部地区</option>
+    </select>
+    <select id="gradeFilter" class="filter-select" title="按等级筛选">
+      <option value="">🏅 全部等级</option>
+      <option value="S">S 卓越</option>
+      <option value="A">A 优秀</option>
+      <option value="B">B 良好</option>
+      <option value="C">C 一般</option>
+      <option value="D">D 较弱</option>
+    </select>
+  </div>
+</header>
+
+<main class="main-container">
+  <section class="map-section" id="mapSection">
+    <div class="map-wrapper" id="mapChart"></div>
+    <div class="map-legend" aria-hidden="true">
+      <span class="legend-label">低 0</span>
+      <span class="legend-gradient"></span>
+      <span class="legend-label">100 高</span>
+    </div>
+  </section>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h2 class="sidebar-title" id="panelTitle">🏆 全球排名 TOP 10</h2>
+      <button class="sidebar-toggle" id="sidebarToggle" title="收起面板">◀</button>
+    </div>
+
+    <nav class="sidebar-crumb" id="sidebarCrumb" hidden>
+      <button class="crumb-link" id="crumbRoot" type="button">世界</button>
+      <span class="crumb-sep">›</span>
+      <span class="crumb-current" id="crumbCurrent"></span>
+    </nav>
+
+    <div class="sidebar-content" id="sidebarContent">
+      <ol class="rank-list" id="rankList"></ol>
+    </div>
+
+    <div class="province-detail" id="provinceDetail" style="display:none;">
+      <button class="back-btn" id="backToRanking">← 返回排名</button>
+      <h3 class="detail-province-name" id="detailProvinceName"></h3>
+      <div class="detail-grade" id="detailGrade"></div>
+      <div class="radar-wrapper" id="radarChart"></div>
+      <h4 class="uni-section-title">🏫 TOP 10 大学</h4>
+      <div class="uni-list" id="uniList"></div>
+      <div class="detail-scores" id="detailScores"></div>
+    </div>
+  </aside>
+</main>
+
+<!-- 图表库与地图数据全部放在本地，断网也能运行 -->
+<script src="vendor/echarts.min.js"></script>
+<script src="js/api.js?v=4"></script>
+<script src="js/map.js?v=4"></script>
+<script src="js/panel.js?v=4"></script>
+<script src="js/app.js?v=4"></script>
+</body>
+</html>
